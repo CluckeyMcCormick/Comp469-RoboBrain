@@ -2,7 +2,7 @@ import serial
 import time
 
 
-VALID = {"forward" : 'f', "backward" : 'b', "stop" : 's'}
+VALID = {"forward" : b'f', "backward" : b'b', "stop" : b's'}
 try:
 	ser = serial.Serial('/dev/ttyACM1', 9600)
 except:
@@ -17,8 +17,8 @@ print()
 while True:
 	resp = str( input() ).lower()
 	if resp in VALID:
-		ser.write( ord(VALID[resp]) )
-		time.sleep(1)
+		ser.write( VALID[resp] )
+		time.sleep(.25)
 
 		print( ser.readline() )
 

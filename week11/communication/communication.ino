@@ -87,18 +87,18 @@ void loop()
     }
     else if(gotByt != -1){
       Serial.print("Invalid bytecode: ");
-      Serial.println( int(gotByt) );  
+      Serial.println( gotByt );  
     } 
   }
 }
 
-void forward(){
+void backward(){
     ST0.write(65);
     ST1.write(65);
     delay(10);   
 }
 
-void backward(){
+void forward(){
     ST0.write(105);
     ST1.write(105);
     delay(10);   
