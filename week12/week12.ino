@@ -1,7 +1,7 @@
-/* Encoder Test for Robo-team 1
+/* Testing movement functions, Robo-team 1
  *  Nicolas Fredrickson
  *  Steven Coronel
- *  October 26th, 2017
+ *  November 16th, 2017
  */
 
 // we can achieve a 90 degree turn via 450/1088 turns
