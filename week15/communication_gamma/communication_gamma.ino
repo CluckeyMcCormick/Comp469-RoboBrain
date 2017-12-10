@@ -1,7 +1,7 @@
 /* Encoder Test for Robo-team 1
  *  Nicolas Fredrickson
  *  Steven Coronel
- *  December 10th, 2017
+ *  November 30th, 2017
  */
 
 // we can achieve a 90 degree turn via 450/1088 turns
@@ -49,6 +49,9 @@ int loops;
 #define BACKWARD_BYTECODE   'b'
 #define RIGHT_BYTECODE      'r'
 #define LEFT_BYTECODE       'l'
+#define QUAD_LEFT_BYTECODE  'c'
+#define QUAD_RIGHT_BYTECODE 'h'
+#define STOP_BYTECODE       's'
 
 Servo ST0, ST1;
 
@@ -71,25 +74,42 @@ void setup()
   
 void loop()
 {
-  //Serial.println("Loop!");
   if (Serial.available() > 0) {
     gotByt = Serial.read();
 
     if(gotByt == FORWARD_BYTECODE){
-      forward();
-      Serial.print("F!\n");
+      Serial.println("F!");
+      forward();  
     }
     else if(gotByt == BACKWARD_BYTECODE){
+      Serial.println("B!");
       backward();
-      Serial.print("B!\n");
     }
     else if(gotByt == RIGHT_BYTECODE){
+      Serial.println("R!");
       turn90_right();
-      Serial.print("R!\n");
     }
-    else if(gotByt == LEFT_BYTECODE){ 
+    else if(gotByt == LEFT_BYTECODE){
+      Serial.println("L!");
       turn90_left();
-      Serial.print("L!\n");
+    }
+    else if(gotByt == STOP_BYTECODE){
+      Serial.println("STOP!");
+      stopAll();
+    }
+    else if(gotByt == QUAD_LEFT_BYTECODE){
+      Serial.println("QL!");
+      turn90_left();
+      turn90_left();
+      turn90_left();
+      turn90_left();
+    }
+    else if(gotByt == QUAD_RIGHT_BYTECODE){
+      Serial.println("QR!");
+      turn90_right();
+      turn90_right();
+      turn90_right();
+      turn90_right();
     }
     else if(gotByt != -1){
       Serial.print("Invalid bytecode: ");
@@ -99,17 +119,17 @@ void loop()
 }
 
 void forward(){
-  ST0.write(65);
-  ST1.write(65);
-  delay(1000);
-  stopAll();  
+    ST0.write(65);
+    ST1.write(65);
+    delay(1000);
+    stopAll();  
 }
 
 void backward(){
-  ST0.write(105);
-  ST1.write(105);
-  delay(1000);
-  stopAll();   
+    ST0.write(105);
+    ST1.write(105);
+    delay(1000);
+    stopAll();   
 }
 
 void turn90_left()
@@ -129,9 +149,9 @@ void turn90_right()
 }
 
 void stopAll(){
-  ST0.write(85);
-  ST1.write(85);
-  delay(10);   
+    ST0.write(85);
+    ST1.write(85);
+    delay(10);   
 }
 
 void EncoderInit()
