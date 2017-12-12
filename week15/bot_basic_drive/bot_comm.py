@@ -43,16 +43,16 @@ def do_action(bot_dir, action):
 	#Else, if the action is just one
 	#less than our direction,
 	elif bot_dir - 1 == action or (bot_dir == 0 and action == 3): 
-		#turn left
-		left()
+		#turn right
+		right()
 		#go forward
 		forward()
 
 	#Otherwise, if the action is just
 	#one greater than our direction
 	elif (bot_dir + 1) % 4 == action:
-		#turn right
-		right()
+		#turn left
+		left()
 		#go forward
 		forward()
 
@@ -72,3 +72,29 @@ def action_to_bot(action_code):
 	ser.write( action_code )
 	time.sleep(.25)
 	ser.readline()
+
+if __name__ == '__main__':
+	print("clear the field!")
+	initialize_comms(True)
+	print("Robo-drive in: ")
+	for i in range(4, -1, -1):
+		time.sleep(1)
+		print("\t" + str(i))
+
+	for i in range(4):
+		print()
+		print("Side " + str(i))
+
+		print("\tForward!")
+		forward()
+		print("\tForward!")
+		forward()
+
+		if i % 2 == 0:
+			print("\tForward!")
+			forward()
+		print("\tRight!")
+		right()
+
+	print("All done!")
+

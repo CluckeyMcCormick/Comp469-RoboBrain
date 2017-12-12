@@ -23,6 +23,24 @@ template = [
 	['╚', '═', '═', '═', '═', '═', '╝'],
 ]
 
+template = [
+	['╔', '═', '═', '═', '╗'],
+	['║', '.', '.', '.', '║'],
+	['║', '.', '.', '.', '║'],
+	['║', '.', '.', '.', '║'],
+	['║', '.', '.', '.', '║'],
+	['╚', '═', '═', '═', '╝'],
+]
+
+template = [
+	['╔', '═', '═', '═', '╗'],
+	['║', '.', '.', '.', '║'],
+	['║', '.', '.', '.', '║'],
+	['║', '.', '#', '.', '║'],
+	['║', '.', '.', '.', '║'],
+	['╚', '═', '═', '═', '╝'],
+]
+
 ghost_dict = {
 	1 : 3,
 	3 : 1
@@ -46,12 +64,15 @@ char_funcs = {
 	'R' : draw_pac.draw_horiz_cap_right,
 }
 
-PAC_INITIAL = ( 3, 3 )
+PAC_INITIAL = ( 4, 3 )
+# 0 is right, 1 is up
+# 2 is left, 3 is down
+PAC_START_DIR = 1
 
-GHOST_GREEN_INITIAL = ( 3, 1 )
+GHOST_GREEN_INITIAL = ( 4, 1 )
 GHOST_GREEN_DIR = 1
 
-GHOST_RED_INITIAL = ( 4, 5 )
+GHOST_RED_INITIAL = ( 6, 3 )
 GHOST_RED_DIR = 1
 
 bot.initialize_comms(True)
@@ -77,7 +98,7 @@ class Pacworld:
 
 		# 0 is right, 1 is up
 		# 2 is left, 3 is down
-		self.pac_dir = 0
+		self.pac_dir = PAC_START_DIR
 
 		self.dots = set()
 
@@ -132,6 +153,7 @@ class Pacworld:
 			#GHOST takes action
 			action_taken = False
 			new_red_dir = self.red_dir
+			"""
 			while not action_taken:
 				addY, addX = action_dict[new_red_dir]
 				y, x = new_red_pos
@@ -141,6 +163,7 @@ class Pacworld:
 				else:
 					new_red_pos = (y + addY, x + addX)
 					action_taken = True
+			"""
 		else:
 			dot_eaten = False
 

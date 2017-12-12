@@ -49,9 +49,6 @@ int loops;
 #define BACKWARD_BYTECODE   'b'
 #define RIGHT_BYTECODE      'r'
 #define LEFT_BYTECODE       'l'
-#define QUAD_LEFT_BYTECODE  'c'
-#define QUAD_RIGHT_BYTECODE 'h'
-#define STOP_BYTECODE       's'
 
 Servo ST0, ST1;
 
@@ -78,38 +75,20 @@ void loop()
     gotByt = Serial.read();
 
     if(gotByt == FORWARD_BYTECODE){
-      Serial.println("F!");
-      forward();  
+      forward();
+      Serial.print("F!\n");
     }
     else if(gotByt == BACKWARD_BYTECODE){
-      Serial.println("B!");
       backward();
+      Serial.print("B!\n");
     }
     else if(gotByt == RIGHT_BYTECODE){
-      Serial.println("R!");
       turn90_right();
+      Serial.print("R!\n");
     }
-    else if(gotByt == LEFT_BYTECODE){
-      Serial.println("L!");
+    else if(gotByt == LEFT_BYTECODE){ 
       turn90_left();
-    }
-    else if(gotByt == STOP_BYTECODE){
-      Serial.println("STOP!");
-      stopAll();
-    }
-    else if(gotByt == QUAD_LEFT_BYTECODE){
-      Serial.println("QL!");
-      turn90_left();
-      turn90_left();
-      turn90_left();
-      turn90_left();
-    }
-    else if(gotByt == QUAD_RIGHT_BYTECODE){
-      Serial.println("QR!");
-      turn90_right();
-      turn90_right();
-      turn90_right();
-      turn90_right();
+      Serial.print("L!\n");
     }
     else if(gotByt != -1){
       Serial.print("Invalid bytecode: ");
@@ -119,16 +98,35 @@ void loop()
 }
 
 void forward(){
+    float average = 0;
+    
+    duration0 = 0;
+    duration1 = 0;
     ST0.write(65);
     ST1.write(65);
-    delay(1000);
+
+    do {
+      average += duration0 * PIP_DIST;
+      average += duration1 * PIP_DIST;
+      Serial.print(average);
+    } while( (average / 2) / 165 < 1000);
+    
     stopAll();  
 }
 
 void backward(){
+    float average = 0;
+    duration0 = 0;
+    duration1 = 0;
     ST0.write(105);
     ST1.write(105);
-    delay(1000);
+
+    do {
+      average += duration0 * PIP_DIST;
+      average += duration1 * PIP_DIST;
+      Serial.print(average);
+    } while( (average / 2) / 165 > -1000);
+
     stopAll();   
 }
 
